@@ -4,19 +4,6 @@ import {Routes, Route, Link, BrowserRouter, useNavigate} from "react-router-dom"
 import {useEffect, useState} from "react";
 
 
-const products = [
-    {
-        name: "Star Destroyer",
-        manufacturer: "Innova",
-        year: "2016",
-    },
-    {
-        name: "Anax",
-        manufacturer: "Discraft",
-        year: "2018",
-    }
-];
-
 function FrontPage() {
     return <div>
         <h1>Database av et slag</h1>
