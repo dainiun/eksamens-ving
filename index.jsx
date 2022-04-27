@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {Routes, Route, Link, BrowserRouter} from "react-router-dom";
+import {useState} from "react";
 
 
 const products = [
@@ -26,25 +27,54 @@ function FrontPage() {
     </div>;
 }
 
-function ListProducts() {
+function ListProducts({products}) {
     return <div>
         <h1> Liste over produkt </h1>
             {products.map(p =>
-                <>
+                <div key={p.name}>
                     <h2>Product: {p.name}</h2>
                     <p>{p.manufacturer}</p>
                     <p>{p.name}</p>
-                </>
+                </div>
             )}
     </div>;
+}
+
+function NewMovie() {
+    const [name, setName] = useState("");
+    const [manufacturer, setManufacturer] = useState("");
+    const [year, setYear] = useState("");
+
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        products.push({name, year, manufacturer});
+    }
+
+    return <form onSubmit={handleSubmit}>
+        <h1> Nytt produkt </h1>;
+        <div>
+            <label>Name: <input value={name} onChange={e => setName(e.target.value)} /></label>
+        </div>
+        <div>
+            <label>manufacturer: <input value={manufacturer} onChange={e => setManufacturer(e.target.value)} /></label>
+        </div>
+        <div>
+            <label>year: <input value={year} onChange={e => setYear(e.target.value)} /></label>
+        </div>
+        <button>Submit</button>
+        <pre>
+            {JSON.stringify({name, manufacturer, year})}
+        </pre>
+    </form>;
 }
 
 function Application() {
         return <BrowserRouter>
         <Routes>
             <Route path="/" element={<FrontPage />}/>
-            <Route path="/product/new" element={<h1> Nytt produkt </h1>}/>
-            <Route path="/products" element={<ListProducts/>}/>
+            <Route path="/product/new" element={<NewMovie/>}/>
+            <Route path="/products" element={<ListProducts products={products}/>}/>
         </Routes>;
     </BrowserRouter>;
 }
