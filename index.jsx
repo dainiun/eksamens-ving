@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {Routes, Route, Link, BrowserRouter, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 const products = [
@@ -27,7 +27,18 @@ function FrontPage() {
     </div>;
 }
 
-function ListProducts({products}) {
+function ListProducts({productsApi}) {
+    const [products, setProducts] = useState();
+    useEffect(async () => {
+        setProducts( undefined);
+        setProducts(await productsApi.listProducts());
+    }, []);
+
+
+    if (!products){
+        return <div>Laster...</div>
+    }
+
     return <div>
         <h1> Liste over produkt </h1>
             {products.map(p =>
@@ -40,7 +51,7 @@ function ListProducts({products}) {
     </div>;
 }
 
-function NewMovie(onAddProduct) {
+function NewMovie({productsApi}) {
     const [name, setName] = useState("");
     const [manufacturer, setManufacturer] = useState("");
     const [year, setYear] = useState("");
@@ -48,9 +59,9 @@ function NewMovie(onAddProduct) {
     const navigate = useNavigate();
 
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        onAddProduct({name, year, manufacturer});
+        await productsApi.onAddProduct({name, year, manufacturer});
         navigate("/");
     }
 
@@ -70,12 +81,18 @@ function NewMovie(onAddProduct) {
 }
 
 function Application() {
+        const productsApi = {
+            onAddProduct: async (p) => products.push(p),
+            listProducts: async () => products
+
+        }
+
         return <BrowserRouter>
         <Routes>
             <Route path="/" element={<FrontPage />}/>
-            <Route path="/product/new" element={<NewMovie onAddProduct={p => products.push(p)}/>}/>
-            <Route path="/products" element={<ListProducts products={products}/>}/>
-        </Routes>;
+            <Route path="/product/new" element={<NewMovie productsApi={productsApi}/>}/>
+            <Route path="/products" element={<ListProducts productsApi={productsApi}/>}/>
+        </Routes>
     </BrowserRouter>;
 }
 
