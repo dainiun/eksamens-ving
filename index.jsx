@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {Routes, Route, Link, BrowserRouter} from "react-router-dom";
+import {Routes, Route, Link, BrowserRouter, useNavigate} from "react-router-dom";
 import {useState} from "react";
 
 
@@ -40,15 +40,18 @@ function ListProducts({products}) {
     </div>;
 }
 
-function NewMovie() {
+function NewMovie(onAddProduct) {
     const [name, setName] = useState("");
     const [manufacturer, setManufacturer] = useState("");
     const [year, setYear] = useState("");
 
+    const navigate = useNavigate();
+
 
     function handleSubmit(e) {
         e.preventDefault();
-        products.push({name, year, manufacturer});
+        onAddProduct({name, year, manufacturer});
+        navigate("/");
     }
 
     return <form onSubmit={handleSubmit}>
@@ -63,9 +66,6 @@ function NewMovie() {
             <label>year: <input value={year} onChange={e => setYear(e.target.value)} /></label>
         </div>
         <button>Submit</button>
-        <pre>
-            {JSON.stringify({name, manufacturer, year})}
-        </pre>
     </form>;
 }
 
@@ -73,7 +73,7 @@ function Application() {
         return <BrowserRouter>
         <Routes>
             <Route path="/" element={<FrontPage />}/>
-            <Route path="/product/new" element={<NewMovie/>}/>
+            <Route path="/product/new" element={<NewMovie onAddProduct={p => products.push(p)}/>}/>
             <Route path="/products" element={<ListProducts products={products}/>}/>
         </Routes>;
     </BrowserRouter>;
