@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/dainiun/eksamens-ving#readme",
   "devDependencies": {
-    "parcel": "^2.5.0"
+    "parcel": "^2.5.0",
+    "react-router-dom": "^6.3.0"
   },
   "dependencies": {
     "react": "^18.1.0",
