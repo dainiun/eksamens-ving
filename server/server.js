@@ -18,10 +18,15 @@ const products = [
 ];
 
 app.get("/api/products", (req ,res) => {
-    res.json( products)
+    res.json(products)
 });
 
+
 app.use(express.static(path.resolve("../dist")));
+
+app.use((req,res) =>{
+    res.sendFile(path.resolve("..", "dist", "index.html"));
+});
 
 const server = app.listen(3000, () => {
     console.log("listening on http://localhost:" +server.address().port)
