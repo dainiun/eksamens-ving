@@ -14,6 +14,7 @@ function FrontPage() {
     </div>;
 }
 
+
 function ListProducts({productsApi}) {
     const [products, setProducts] = useState();
     useEffect(async () => {
@@ -69,7 +70,15 @@ function NewMovie({productsApi}) {
 
 function Application() {
         const productsApi = {
-            onAddProduct: async (p) => products.push(p),
+            onAddProduct: async (p) => {
+                await fetch("/api/products", {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(p)
+                })
+            },
             listProducts: async () => {
                 const res = await fetch("/api/products");
                 return res.json();
