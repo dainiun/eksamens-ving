@@ -70,7 +70,10 @@ function NewMovie({productsApi}) {
 function Application() {
         const productsApi = {
             onAddProduct: async (p) => products.push(p),
-            listProducts: async () => products
+            listProducts: async () => {
+                const res = await fetch("/api/products");
+                return res.json();
+            }
 
         }
 

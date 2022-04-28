@@ -6,7 +6,7 @@ const app = express();
 
 const products = [
     {
-        name: "Star Destroyer",
+        name: "Star Destroyeeer",
         manufacturer: "Innova",
         year: "2016",
     },
