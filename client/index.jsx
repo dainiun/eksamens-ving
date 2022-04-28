@@ -27,7 +27,7 @@ function ListProducts({productsApi}) {
     }
 
     return <div>
-        <h1> Liste over produkt </h1>
+        <h1> Alle produkter </h1>
             {products.map(p =>
                 <div key={p.name}>
                     <h2>Product: {p.name}</h2>

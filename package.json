@@ -1,0 +1,26 @@
+{
+  "name": "eksamens-ving",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently npm:dev:server npm:dev:client",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dainiun/eksamens-ving.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dainiun/eksamens-ving/issues"
+  },
+  "homepage": "https://github.com/dainiun/eksamens-ving#readme",
+  "devDependencies": {
+    "concurrently": "^7.1.0"
+  }
+}
